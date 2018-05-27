@@ -1,4 +1,5 @@
 from django.shortcuts import render, get_object_or_404
+from django.http import HttpResponse, Http404
 from django.contrib.auth.mixins import(
     LoginRequiredMixin,
     PermissionRequiredMixin
@@ -9,6 +10,7 @@ from django.db import IntegrityError
 from django.views import generic
 from groups.models import Group, GroupMember
 from . import models
+
 # Create your views here.
 
 
@@ -23,6 +25,15 @@ class SingleGroup(generic.DetailView):
 
 class ListGroups(generic.ListView):
     model = Group
+    context_object_name = 'all_groups'
+
+    def get_queryset(self, *args, **kwargs):
+        qs = Group.objects.all()
+        print(self.request.GET)
+        query = self.request.GET.get("q", None)
+        if query is not None:
+            qs = qs.filter(name__icontains=query)
+        return qs
 
 
 class JoinGroup(LoginRequiredMixin, generic.RedirectView):
@@ -72,3 +83,15 @@ class LeaveGroup(LoginRequiredMixin, generic.RedirectView):
                 "You have successfully left this group."
             )
         return super().get(request, *args, **kwargs)
+
+
+def search(request):
+    if 'hood_name' in request.GET and request.GET["hood_name"]:
+        search_term = request.GET.get("hood_name")
+        searched_hoods = Group.search_by_name(search_term)
+        message = f"{search_term}"
+        return render(request, 'group_search.html', {"hoods": searched_hoods})
+
+    else:
+        message = "You haven't searched for any term"
+    return render(request, 'group_search.html')

@@ -32,6 +32,11 @@ class Group(models.Model):
     def get_absolute_url(self):
         return reverse('groups:single', kwargs={'slug': self.slug})
 
+    @classmethod
+    def search_by_name(cls, search_term):
+        name = cls.objects.filter(name__icontains=search_term)
+        return name
+
     class Meta:
         ordering = ['name']
 
