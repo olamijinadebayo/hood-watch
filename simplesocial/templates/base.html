@@ -15,7 +15,7 @@
   <body>
     <nav class="navbar navbar-inverse" role="navigation" id="navbar" style="margin-bottom:0;">
       <div class="container">
-        <a  class="nabvar-brand mynav"href="{% url 'home'%}">Hood-Watch</a>
+        <a  class="nabvar-brand mynav" href="{% url 'home'%}" style="color:white">Hood-Watch</a>
         <ul class="nav navbar-nav navbar-right">
           {% if user.is_authenticated %}
             <li><a href="{% url 'posts:create' %}">Post</a></li>
@@ -34,8 +34,6 @@
 
       {% block content %}
       {% endblock %}
-
-
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
      <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
