@@ -1,1 +1,1 @@
-web: gunicorn simpleclone.wsgi
+web: gunicorn simplesocial.wsgi
