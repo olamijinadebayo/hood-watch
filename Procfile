@@ -1,1 +1,1 @@
-web: gunicorn​ ​simpleclone.wsgi​--log-file=-
+web: gunicorn​ ​simpleclone.wsgi
