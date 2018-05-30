@@ -3,8 +3,6 @@ from django.core.urlresolvers import reverse
 from django.db import models
 from django.utils.text import slugify
 from django import template
-import misaka
-
 #from accounts.models import User
 from django.contrib.auth import get_user_model
 User = get_user_model()
@@ -36,7 +34,6 @@ class Group(models.Model):
         A function to save each group object
         '''
         self.slug = slugify(self.name)
-        self.location_html = misaka.html(self.location)
         super().save(*args, **kwargs)
 
     def delete_Group(self, *args, **kwargs):
@@ -44,7 +41,6 @@ class Group(models.Model):
         A function to delete each group object
         '''
         self .slug = slugify(self.name)
-        self.location_html = misaka.html(self.location)
         super().delete(*args, **kwargs)
 
     def get_absolute_url(self):

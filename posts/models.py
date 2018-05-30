@@ -1,7 +1,6 @@
 from django.db import models
 from django.core.urlresolvers import reverse
 from django.conf import settings
-import misaka
 from groups.models import Group
 from django.contrib.auth import get_user_model
 User = get_user_model()
@@ -29,7 +28,6 @@ class Post(models.Model):
         '''
         this save each post object for each user
         '''
-        self.business_name_html = misaka.html(self.business_name)
         super().save(*args, **kwargs)
 
     def get_absolute_url(self):
