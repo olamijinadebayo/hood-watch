@@ -1,18 +1,17 @@
 from django.db import models
 from django.core.urlresolvers import reverse
 from django.conf import settings
-
 import misaka
-
 from groups.models import Group
-# Create your models here.
-# POSTS MOSELS.PY
-
 from django.contrib.auth import get_user_model
 User = get_user_model()
 
 
 class Post(models.Model):
+    '''
+    This will initialize post model which will be instiantiated
+    whenever a user creates a post
+    '''
     user = models.ForeignKey(User, related_name='posts')
     created_at = models.DateTimeField(auto_now=True)
     message = models.TextField()
@@ -20,13 +19,23 @@ class Post(models.Model):
     group = models.ForeignKey(Group, related_name='posts', null=True, blank=True)
 
     def __str__(self):
+        '''
+        This will ensure that each post is displayed based on the message
+        in the admin panel
+        '''
         return self.message
 
     def save(self, *args, **kwargs):
+        '''
+        this save each post object for each user
+        '''
         self.message_html = misaka.html(self.message)
         super().save(*args, **kwargs)
 
     def get_absolute_url(self):
+        '''
+        This will generate a unique url for each group member
+        '''
         return reverse('posts:single', kwargs={'username': self.user.username, 'pk': self.pk})
 
     class Meta:

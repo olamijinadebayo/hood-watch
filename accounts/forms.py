@@ -3,12 +3,21 @@ from django.contrib.auth.forms import UserCreationForm
 
 
 class UserCreateForm(UserCreationForm):
-
+    '''
+    A form class which inherits properties from the user UserCreationForm
+    '''
     class Meta:
-        fields = ('username','email','password1','password2')
+        '''
+        This will manually set the fields needed from the usercreation form
+        '''
+        fields = ('username', 'email', 'password1', 'password2')
         model = get_user_model()
 
-    def __init__(self,*args,**kwargs):
-        super().__init__(*args,**kwargs)
+    def __init__(self, *args, **kwargs):
+        '''
+        This will customize the labels on the signup form
+        to meet my own requirements
+        '''
+        super().__init__(*args, **kwargs)
         self.fields['username'].label = 'Display Name'
         self.fields['email'].label = "Email Address"
