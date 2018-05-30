@@ -15,7 +15,7 @@ from . import models
 
 
 class CreateGroup(LoginRequiredMixin, generic.CreateView):
-    fields = ("name", "description")
+    fields = ("name", "location")
     model = Group
 
 

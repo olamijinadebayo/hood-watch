@@ -20,8 +20,8 @@ class Group(models.Model):
     '''
     name = models.CharField(max_length=255, unique=True)
     slug = models.SlugField(allow_unicode=True, unique=True)
-    description = models.TextField(default='', blank=True)
-    description_html = models.TextField(editable=False, default='', blank=True)
+    location = models.TextField(default='', blank=True)
+    location_html = models.TextField(editable=False, default='', blank=True)
     members = models.ManyToManyField(User, through='GroupMember')
 
     def __str__(self):
@@ -36,7 +36,7 @@ class Group(models.Model):
         A function to save each group object
         '''
         self.slug = slugify(self.name)
-        self.description_html = misaka.html(self.description)
+        self.location_html = misaka.html(self.location)
         super().save(*args, **kwargs)
 
     def delete_Group(self, *args, **kwargs):
@@ -44,7 +44,7 @@ class Group(models.Model):
         A function to delete each group object
         '''
         self .slug = slugify(self.name)
-        self.description_html = misaka.html(self.description)
+        self.location_html = misaka.html(self.location)
         super().delete(*args, **kwargs)
 
     def get_absolute_url(self):
